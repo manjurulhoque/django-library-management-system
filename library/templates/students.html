@@ -1,0 +1,131 @@
+{% extends 'app.html' %}
+
+{% block body %}
+    <div>
+        <div class="alert alert-info">All Students</div>
+        <a href="#" id="add_book" class="btn btn-success">Add new student</a>
+        <button id="show_book" type="button" style="display:none;" class="btn btn-success"><span
+                class="glyphicon glyphicon-circle-arrow-left"></span> Back
+        </button>
+        <div id="book_table">
+            <table id="table" class="table table-bordered">
+                <thead class="alert-success">
+                <tr>
+                    <th>Student ID</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Department</th>
+                    <th>Section</th>
+                    <th>Year</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for student in students %}
+                    <tr>
+                        <td>{{ student.student_id }}</td>
+                        <td>{{ student.firstname }}</td>
+                        <td>{{ student.lastname }}</td>
+                        <td>{{ student.department }}</td>
+                        <td>{{ student.section }}</td>
+                        <td>{{ student.year }}</td>
+                        <td><a class="btn btn-danger delbook_id" href="{% url 'delete_book' student.id %}"><span
+                                class="glyphicon glyphicon-remove"></span> Delete</a>
+                            <a href="#" data-id="{{ student.id }}" class="btn btn-warning editButton ebook_id">
+                                <span class="glyphicon glyphicon-edit"></span> Edit</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div id="edit_form"></div>
+        <div id="book_form" style="display:none;">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <form id="form" method="POST" action="{% url 'students' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Student ID:</label>
+                        <input type="text" name="sid" required="required" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label>First name:</label>
+                        <input type="text" name="firstname" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Last name:</label>
+                        <input type="text" name="lastname" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Department:</label>
+                        <input type="text" name="department" class="form-control" required="required"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Section:</label>
+                        <input type="text" name="section" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Year:</label>
+                        <input type="text" name="year" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <button name="save_book" id="save_book" type="submit" class="btn btn-primary"><span
+                                class="glyphicon glyphicon-save"></span>
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            $('#table').DataTable();
+        });
+        $(document).ready(function () {
+            $('#add_book').click(function () {
+                $(this).hide();
+                $('#show_book').show();
+                $('#book_table').slideUp();
+                $('#book_form').slideDown();
+                $('#show_book').click(function () {
+                    $(this).hide();
+                    $('#add_book').show();
+                    $('#book_table').slideDown();
+                    $('#book_form').slideUp();
+                });
+            });
+        });
+
+        $('.editButton').on('click', function () {
+            var id = $(this).attr('data-id');
+
+            $.ajax({
+                url: 'http://localhost:8000/edit_book/' + id,
+                method: 'GET'
+            }).success(function (response) {
+                {#                alert(response.title);#}
+                $('#form')
+                    .find('[name="title"]').val(response.title).end()
+                    .find('[name="description"]').val(response.description).end()
+                    .find('[name="author"]').val(response.author).end()
+                    .find('[name="quantity"]').val(response.quantity).end();
+                document.getElementById('save_book').innerText = 'Update';
+                $(this).hide();
+                $('#show_book').show();
+                $('#book_table').slideUp();
+                $('#book_form').slideDown();
+                $('#add_book').hide();
+                $('#show_book').click(function () {
+                    $(this).hide();
+                    document.getElementById('form').reset();
+                    $('#add_book').show();
+                    $('#book_table').slideDown();
+                    $('#book_form').slideUp();
+                });
+            });
+        });
+    </script>
+{% endblock %}

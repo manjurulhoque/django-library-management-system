@@ -1,0 +1,18 @@
+{% load staticfiles %}
+{% include 'partials/header.html' %}
+<body>
+{% include 'partials/navbar.html' %}
+<div class="container-fluid">
+    <div id="wrapper">
+        <main id="page-content-wrapper" role="main">
+            {% include 'partials/sidebar.html' %}
+            {% block body %}{% endblock %}
+        </main>
+    </div>
+</div>
+<script src="{% static 'js/jquery-2.2.3.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/datatables.min.js' %}"></script>
+{% block scripts %}{% endblock %}
+</body>
+{% include 'partials/footer.html' %}

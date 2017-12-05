@@ -1,0 +1,61 @@
+{% extends 'app.html' %}
+
+{% block body %}
+    <div>
+        <div class="alert alert-info">Transaction / Borrowing</div>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <div class="form-group pull-left">
+                <label>Student Name:</label>
+                <br/>
+                <select class="form-control" name="student_id" id="student">
+                    {% for student in students %}
+                        <option value='{{ student.id }}'>{{ student.firstname }} {{ student.lastname }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group pull-right">
+                <button name="save_borrow" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>
+                    Borrow
+                </button>
+            </div>
+            <table id="table" class="table table-stripped">
+                <thead class="alert-success">
+                <tr>
+                    <th>Select</th>
+                    <th>Book Title</th>
+                    <th>Book Category</th>
+                    <th>Book Author</th>
+                    <th>Available</th>
+                    <th>Left</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for book, data in datas %}
+                    <tr>
+                        <td>
+                            {% if data == 0 %}
+                                <label class='text-danger'>Not Available</label>
+                            {% else %}
+                                <input type="hidden" name="book_id" value="{{ book.id }}">
+                                <input type="checkbox" name="selector" value="{{ book.id }}">
+                            {% endif %}
+                        </td>
+                        <td>{{ book.title }}</td>
+                        <td>{{ book.categories.all.0.title }}</td>
+                        <td>{{ book.author }}</td>
+                        <td>{{ book.available }}</td>
+                        <td>
+                            {% if data == 0 %}
+                                <center><label class='text-danger'>Not Available</label></center>
+                            {% else %}
+                                {{ data }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'app.html' %}
+
+{% block body %}
+    <div>
+        <div class="alert alert-info">Transaction / Returning</div>
+
+        <table id="table" class="table table-stripped">
+            <thead class="alert-success">
+            <tr>
+                <th>Student Name</th>
+                <th>Book Title</th>
+                <th>Book Author</th>
+                <th>Status</th>
+                <th>Date Returned</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for borrow in borrows %}
+                <tr>
+                    <td>{{ borrow.student.all.0.firstname }} {{ borrow.student.all.0.lastname }}</td>
+                    <td>{{ borrow.book.all.0.title }}</td>
+                    <td>{{ borrow.book.all.0.author }}</td>
+                    <td>{{ borrow.status }}</td>
+                    <td>{{ borrow.date | date }}</td>
+                    <td>
+                        {% if borrow.status == "Returned" %}
+                            <button disabled="disabled" class="btn btn-primary" type="button" href="#">
+                                <span class="glyphicon glyphicon-check"></span> Returned
+                            </button>
+                        {% else %}
+                            <form method="POST" action="">
+                                {% csrf_token %}
+                                <input type="hidden" name="borrow_id" value="{{ borrow.id }}"/>
+                                <button class="btn btn-danger">
+                                    <span class="glyphicon glyphicon-unchecked"></span> Return
+                                </button>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

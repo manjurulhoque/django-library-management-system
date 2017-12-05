@@ -1,0 +1,46 @@
+<div id="sidebar-wrapper">
+    <aside id="sidebar">
+        <ul id="sidemenu" class="sidebar-nav">
+            <li>
+                <a href="#">
+                    <span class="sidebar-icon"><i class="fa fa-dashboard"></i></span>
+                    <span class="sidebar-title">Home</span>
+                </a>
+            </li>
+            <li>
+                <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-2">
+                    <span class="sidebar-icon"><i class="fa fa-users"></i></span>
+                    <span class="sidebar-title">Accounts</span>
+                    <b class="caret"></b>
+                </a>
+                <ul id="submenu-2" class="panel-collapse collapse panel-switch" role="menu">
+                    <li><a href="{% url 'students' %}">Students</a></li>
+                    <li><a href="#">Roles</a></li>
+                </ul>
+            </li>
+            <li>
+                <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-3">
+                    <span class="sidebar-icon"><i class="fa fa-newspaper-o"></i></span>
+                    <span class="sidebar-title">Transaction</span>
+                    <b class="caret"></b>
+                </a>
+                <ul id="submenu-3" class="panel-collapse collapse panel-switch" role="menu">
+                    <li><a href="{% url 'borrow' %}">Borrowing</a></li>
+                    <li><a href="{% url 'returning' %}">Returning</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="{% url 'books' %}">
+                    <span class="sidebar-icon"><i class="fa fa-database"></i></span>
+                    <span class="sidebar-title">Books</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'categories' %}">
+                    <span class="sidebar-icon"><i class="fa fa-database"></i></span>
+                    <span class="sidebar-title">Category</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+</div>
