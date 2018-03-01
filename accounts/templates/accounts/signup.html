@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Library app | Signup</title>
+    {% include 'partials/stylesheets.html' %}
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3" style="margin-top: 7%">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Sign up here</div>
+                <div class="panel-body">
+                    <form class="form-horizontal" action="{% url 'signup' %}" method="post">
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="title">First name: </label>
+                            <div class="col-md-9">
+                                <input name="first_name" type="text" placeholder="first name" class="form-control"
+                                       required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="title">Last name: </label>
+                            <div class="col-md-9">
+                                <input name="last_name" type="text" placeholder="last name" class="form-control"
+                                       required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="title">Username: </label>
+                            <div class="col-md-9">
+                                <input name="username" type="text" placeholder="username" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="title">Email: </label>
+                            <div class="col-md-9">
+                                <input name="email" type="email" placeholder="email" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="title">Password: </label>
+                            <div class="col-md-9">
+                                <input name="password1" type="password" placeholder="password" class="form-control"
+                                       required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="title">Confirm Password: </label>
+                            <div class="col-md-9">
+                                <input name="password2" type="password" placeholder="confirm password"
+                                       class="form-control"
+                                       required>
+                            </div>
+                        </div>
+
+                        <!-- Form actions -->
+                        <div class="form-group text-center">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-success">Sign up here!</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'partials/javascripts.html' %}
+</body>
+</html>
